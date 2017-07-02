@@ -132,13 +132,13 @@ def load_vectors(folder):
 
 def build_dataset(folder):
     names = glob('%s/*.jpeg' % folder)
-    names = random.sample(names, 10000)
+    #names = random.sample(names, 10000)
     vectors = vectors_from_images(names)
     save_vectors(folder, names, vectors)
 
 if __name__ == '__main__':
     import sys
-    #build_dataset('images')
+    build_dataset('images')
     print 'loading corpus'
     fnames, vectors = load_vectors('images')
     for target in glob('targets/*'):

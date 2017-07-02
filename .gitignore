@@ -1,3 +1,5 @@
+images.*
+targets
 *.pyc
 env/
 .DS_Store
