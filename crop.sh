@@ -4,10 +4,10 @@ dir="$1"
 cd $dir
 
 for file in *; do
-    local filename=$(basename "$file")
-    local name="${filename%%.*}"
+    filename=$(basename "$file")
+    name="${filename%%.*}"
 
-    local result="${name}_%04d.jpeg"
+    result="${name}_%04d.jpeg"
 
     convert -crop 400x325 $file $result
     cp -v $result ../images
