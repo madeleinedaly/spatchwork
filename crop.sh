@@ -1,11 +1,16 @@
 #!/usr/bin/env bash
 
-cd images
-for file in *; do
-    filename=$(basename "$file")
-    name="${filename%%.*}"
+dir="$1"
+cd $dir
 
-    convert -crop 400x325 $file "${name}_%04d.jpeg"
+for file in *; do
+    local filename=$(basename "$file")
+    local name="${filename%%.*}"
+
+    local result="${name}_%04d.jpeg"
+
+    convert -crop 400x325 $file $result
+    cp -v $result ../images
 done
 
 cd ..
