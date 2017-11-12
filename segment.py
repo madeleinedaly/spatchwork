@@ -12,7 +12,7 @@ import json, time, random
 from PIL import Image, ImageEnhance
 
 def enhance(img):
-    res = ImageEnhance.Sharpness(img.convert('RGB')).enhance(5)
+    res = ImageEnhance.Sharpness(img).enhance(5)
     return res
 
 norm_cache = {}
