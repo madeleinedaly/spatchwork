@@ -132,7 +132,7 @@ def load_vectors(folder):
 
 def build_dataset(folder):
     names = glob('%s/*.jpeg' % folder)
-    #names = random.sample(names, 10000)
+    names = random.sample(names, 10000)
     vectors = vectors_from_images(names)
     save_vectors(folder, names, vectors)
 
@@ -144,8 +144,11 @@ if __name__ == '__main__':
     for target in glob('targets/*'):
         if target.endswith('_processed.png'):
             continue
-        print target
-        seg = Segmentation(target)
-        print 'applying textures'
-        seg.apply_textures(vectors, fnames)
-        seg.save('%s_processed.png' % target.split('.')[0])
+        try:
+            print target
+            seg = Segmentation(target)
+            print 'applying textures'
+            seg.apply_textures(vectors, fnames)
+            seg.save('%s_processed.png' % target.split('.')[0])
+        except (ValueError, MemoryError):
+            continue
