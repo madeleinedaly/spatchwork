@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "p-map": "^2.0.0",
+    "p-reduce": "^1.0.0"
+  }
+}

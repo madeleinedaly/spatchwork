@@ -130,18 +130,23 @@ def load_vectors(folder):
     vecs = np.load('%s/vectors.npy' % folder)
     return (fnames, vecs)
 
-def build_dataset(folder):
+def build_dataset(folder, sample_size):
     names = glob('%s/*.jpeg' % folder)
-    names = random.sample(names, 10000)
+    names = random.sample(names, sample_size)
     vectors = vectors_from_images(names)
     save_vectors(folder, names, vectors)
 
 if __name__ == '__main__':
     import sys
-    build_dataset('images')
+    if len(sys.argv) < 3:
+        print 'invalid arguments'
+        sys.exit(2)
+    (sample_size, target_dir) = sys.argv[1:]
+    build_dataset('images', int(sample_size))
     print 'loading corpus'
     fnames, vectors = load_vectors('images')
-    for target in glob('targets/*'):
+    pattern = '/'.join((target_dir, '*'))
+    for target in glob(pattern):
         if target.endswith('_processed.png'):
             continue
         try:

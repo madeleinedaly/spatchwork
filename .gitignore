@@ -1,7 +1,12 @@
-images.*
-targets
+images*
+target*
+*.jpeg
+*.jpg
+*.gif
+*.png
 *.pyc
 env/
+node_modules/
 .DS_Store
 keys.py
 twitter.sqlite
