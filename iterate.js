@@ -15,8 +15,10 @@ const [mkdir, readdir, copyFile, execFile] = [
   child_process.execFile
 ].map(util.promisify);
 
-(async ([input]) => {
-  const frames = 420;
+(async ([
+  frames, // how many collages to make
+  input   // base image to collage on
+]) => {
   const pwd = process.cwd();
   const concurrency = os.cpus().length;
   const target = path.resolve(pwd, input);
@@ -25,6 +27,7 @@ const [mkdir, readdir, copyFile, execFile] = [
   const sizes = range((jpegs.length - frames), jpegs.length);
   const pad = s => String(s).padStart(sizes[sizes.length - 1].length, '0');
 
+  // create target dirs and copy base image to them in parallel
   const tasks = await Promise.all(sizes.map(async (size, i) => {
     const dir = path.join(pwd, `target-${pad(i)}`);
     await mkdir(dir);
@@ -33,6 +36,7 @@ const [mkdir, readdir, copyFile, execFile] = [
     return {size, dir};
   }));
 
+  // generate one collage per core
   for (const subset of chunk(tasks, concurrency)) {
     await Promise.all(subset.map(task => {
       const {size, dir} = task;
